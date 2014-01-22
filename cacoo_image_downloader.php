@@ -11,6 +11,9 @@
 // Debug
 define('DEBUG', false);
 
+// Log
+define('LOG', true);
+
 // Cacoo API
 define('CACOO_API', 'https://cacoo.com/api/v1/diagrams');
 define('FORMAT', '.json');
@@ -93,6 +96,8 @@ function get_images($apiKey, $diagram = array()) {
             echo "画像の保存に失敗しました(書き込みエラー)\n";
             exit;
         }
+
+        print_log('save: ' . $filepath);
     }
 }
 
@@ -162,6 +167,12 @@ function print_help() {
 function debug() {
     if (DEBUG) {
         var_dump(func_get_args());
+    }
+}
+
+function print_log($str) {
+    if (LOG) {
+        echo $str . "\n";
     }
 }
 
