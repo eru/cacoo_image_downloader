@@ -17,7 +17,7 @@ define('FORMAT', '.json');
 define('API_KEY', '?apiKey=');
 
 // option
-$shortops = 'hk:f:';
+$shortops = 'hk:f:d:';
 
 // option のパースとチェック
 $options = getopt($shortops);
@@ -28,6 +28,13 @@ $diagrams = get_diagrams($options['k']);
 
 // 図の詳細情報の取得
 foreach ($diagrams as &$v) {
+    // 図名指定のある場合には、図名のチェックを行う
+    if (array_key_exists('d', $options) && $options['d'] !== false) {
+        if ($options['d'] != $v['title']) {
+            continue;
+        }
+    }
+
     // フォルダ指定のある場合には、フォルダ名のチェックを行う
     if (array_key_exists('f', $options) && $options['f'] !== false) {
         if ($options['f'] != $v['folderName']) {
@@ -147,6 +154,7 @@ function print_help() {
     echo "\n";
     echo "-k APIキー\n";
     echo "-f ダウンロードする図のフォルダ、未指定の場合にはすべての図\n";
+    echo "-d ダウンロードする図の名前\n";
     echo "-h このペルプを表示します\n";
     exit;
 }
