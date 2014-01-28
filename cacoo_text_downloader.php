@@ -62,7 +62,7 @@ function get_texts($apiKey, $diagramId) {
     debug($content);
 
     foreach($content->xpath('//text') as $v) {
-        echo $v . "\n";
+        echo str_replace(array("\r\n","\r","\n"), '[改行]', $v) . "\n";
     }
 }
 
